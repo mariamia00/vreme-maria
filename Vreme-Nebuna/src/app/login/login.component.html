@@ -1,0 +1,74 @@
+<!-- login.component.html -->
+<div class="login-cont">
+  <div class="container my-5">
+    <div class="row justify-content-center">
+      <div class="col-md-6">
+        <div class="card">
+          <div class="card-header">
+            <h3 class="text-center">Login</h3>
+          </div>
+          <div class="card-body">
+            <form [formGroup]="loginForm" (ngSubmit)="submit()">
+              <div class="form-group my-3">
+                <label for="email">Email</label>
+                <input
+                  type="email"
+                  class="form-control"
+                  id="email"
+                  placeholder="Enter your email"
+                  formControlName="email"
+                  required
+                />
+                <div
+                  *ngIf="
+                    fc.email.invalid && (fc.email.dirty || fc.email.touched)
+                  "
+                  class="text-danger"
+                >
+                  <div *ngIf="fc.email.errors?.required">Email is required</div>
+                  <div *ngIf="fc.email.errors?.email">Invalid email format</div>
+                </div>
+              </div>
+              <div class="form-group my-3">
+                <label for="password">Password</label>
+                <input
+                  type="password"
+                  class="form-control"
+                  id="password"
+                  placeholder="Enter your password"
+                  formControlName="password"
+                  required
+                />
+                <div
+                  *ngIf="
+                    fc['password'].invalid &&
+                    (fc['password'].dirty || fc['password'].touched)
+                  "
+                  class="text-danger"
+                >
+                  <div *ngIf="fc['password'].errors?.required">
+                    Password is required
+                  </div>
+                  <div class="container mt-5"></div>
+                </div>
+              </div>
+              <div *ngIf="loginError" class="alert alert-danger">
+                <P>Email or password is wrong</P>
+              </div>
+              <div class="text-center">
+                <button type="submit" class="btn btn-primary btn-block">
+                  Login
+                </button>
+                <div>
+                  <a class="text-secondary mt-3" routerLink="/register"
+                    >Don't have an account? Create one!</a
+                  >
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

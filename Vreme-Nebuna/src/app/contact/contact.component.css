@@ -1,0 +1,14 @@
+.bg-custom {
+  background: linear-gradient(135deg, #fbff8b, #c4ccfa, #e2b1d3, #9692ea);
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  background-size: cover;
+  color: #333;
+}
+.hover-effect-card {
+  transition: transform 0.3s;
+}
+
+.hover-effect-card:hover {
+  transform: translateY(-10px); /* Move the card 10px up when hovered */
+}

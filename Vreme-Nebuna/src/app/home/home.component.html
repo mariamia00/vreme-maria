@@ -1,0 +1,125 @@
+<div class="container my-3">
+  <div class="container my-4">
+    <h4 class="text-dark">Welcome to our weather community!</h4>
+    <p>
+      Lorem ipsum dolor sit amet consectetur adipisicing elit. Officiis autem
+      distinctio, dicta soluta possimus sed. Quod fugit error, placeat fuga,
+      optio deleniti, reprehenderit magni tempora veritatis cumque beatae iste
+      ipsa?
+    </p>
+  </div>
+
+  <div class="bg-light p-4 my-4 rounded-3 shadow">
+    <p>Now checking weather for {{ WeatherData.name }}</p>
+    <hr />
+    <div class="row justify-content-left">
+      <div class="col-md-3 d-flex flex-column">
+        <div id="divWeatherMain" class="d-flex flex-column">
+          <div *ngIf="WeatherData.isDay" class="weatherWidgetRow">
+            <i class="fas fa-3x fa-sun sun"></i>
+          </div>
+          <div *ngIf="!WeatherData.isDay" class="weatherWidgetRow">
+            <i class="fas fa-3x fa-moon moon"></i>
+          </div>
+          <div class="weatherWidgetRow cloudDiv">
+            <i class="fas fa-cloud fa-3x cloud"></i>
+          </div>
+          <div
+            class="weatherWidgetRow"
+            style="font-size: 32px; margin-top: 5px"
+          >
+            {{ WeatherData.temp_celcius }}°
+          </div>
+          <div class="weatherWidgetRow" style="font-size: 12px">
+            {{ WeatherData.temp_min }}° / {{ WeatherData.temp_max }}°
+          </div>
+          <div class="weatherWidgetRow" style="font-size: 12px">
+            Feels Like: {{ WeatherData.temp_feels_like }}°
+          </div>
+          <div
+            class="weatherWidgetRow"
+            style="font-size: 25px; margin-top: 10px"
+          >
+            {{ WeatherData.name }}
+          </div>
+          <div class="weatherWidgetRow" style="font-size: 12px">
+            Precipitation:
+            {{ WeatherData.rain ? WeatherData.rain["1h"] + " mm" : "N/A" }} ({{
+              calculatePrecipitationPercentage(
+                WeatherData.rain ? WeatherData.rain["1h"] : 0,
+                WeatherData.snow ? WeatherData.snow["1h"] : 0
+              )
+            }}%)
+          </div>
+          <div class="weatherWidgetRow" style="font-size: 12px">
+            Humidity: {{ WeatherData.main.humidity }}%
+          </div>
+        </div>
+      </div>
+      <div class="col-md-9">
+        <div id="divWeatherDetails" class="bg-primary rounded-3 p-3 h-100">
+          <h4>More about weather in {{ WeatherData.name }}</h4>
+          <p>
+            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Est illum
+            accusantium eaque quidem, labore vel amet sed. Ex distinctio
+            voluptate animi aspernatur officiis perspiciatis, nemo ad
+            reprehenderit obcaecati officia temporibus!
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!--* ---------- 8 days forecast -------->
+  <div class="bg-light my-4 p-4 rounded-3 shadow">
+    <h2 class="mb-3">6-day forecast</h2>
+    <input [(ngModel)]="city" class="form-control" placeholder="Enter a city" />
+    <button (click)="getForecastData(city)" class="btn btn-secondary my-2">
+      Search
+    </button>
+    <hr />
+    <div *ngIf="forecastData">
+      <h3>Weather for {{ forecastData.city.name }}</h3>
+      <div class="row">
+        <ng-container *ngFor="let forecast of groupForecastsByDay()">
+          <div class="col-md-4 col-sm-4">
+            <div class="card mb-3 weather-card">
+              <div class="card-body">
+                <h6 class="date text-light text-center">
+                  {{ forecast.dt_txt | date : "mediumDate" }}
+                </h6>
+                <div class="mb-3">
+                  <div class="weatherWidgetRow">
+                    <i
+                      [ngClass]="getWeatherIcon(forecast)"
+                      class="fas fa-3x"
+                      [style.color]="getWeatherIconColor(forecast)"
+                    ></i>
+                  </div>
+
+                  <div
+                    class="weatherWidgetRow cloudDiv"
+                    *ngIf="getWeatherIcon(forecast) !== 'fa-sun'"
+                  >
+                    <i class="fas fa-cloud fa-3x cloud"></i>
+                  </div>
+                </div>
+
+                <div class="row text-center my-3">
+                  <p class="fs-3 p-0 m-0">
+                    {{ forecast.main.temp.toFixed(0) }}°C
+                  </p>
+                  <p class="feels-like p-0 m-0">
+                    Feels Like: {{ forecast.main.feels_like.toFixed(0) }}°C
+                  </p>
+                </div>
+                <p>{{ forecast.weather[0].description }}</p>
+                <p class="humidity">Humidity: {{ forecast.main.humidity }}%</p>
+              </div>
+            </div>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+</div>
