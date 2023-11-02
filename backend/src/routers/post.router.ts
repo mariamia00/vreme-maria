@@ -6,6 +6,7 @@ import auth from "../middlewares/auth.mid";
 import asyncHandler from "express-async-handler";
 import fs from "fs";
 import { UserModel } from "../models/user.model";
+import Comment from "../models/comments.model";
 
 const router = express.Router();
 router.use(auth);
@@ -52,7 +53,10 @@ router.post(
 // GET route to retrieve all images
 router.get("/images", async (req: Request, res: Response) => {
   try {
-    const images = await Image.find({}, "_id title imageUrl author");
+    const images = await Image.find(
+      {},
+      "_id title imageUrl author comments"
+    ).populate("comments");
 
     // Iterate through the images and fetch author names
     const imagesWithAuthors = await Promise.all(
@@ -106,6 +110,9 @@ router.delete(
 
       // Delete the post from the database
       await Image.deleteOne({ _id: postId });
+
+      // Delete associated comments
+      await Comment.deleteMany({ post: postId });
 
       const imagePath = path.join(__dirname, "..", "uploads", post.imageUrl);
 

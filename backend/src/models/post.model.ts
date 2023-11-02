@@ -5,6 +5,7 @@ export interface IImage extends Document {
   imageUrl: string;
   author: Types.ObjectId;
   createdAt: Date;
+  comments: Types.ObjectId[];
 }
 
 const imageSchema: Schema = new mongoose.Schema({
@@ -21,6 +22,12 @@ const imageSchema: Schema = new mongoose.Schema({
     ref: "User", // Reference to the User model
     required: true,
   },
+  comments: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "Comment",
+    },
+  ],
 });
 
 const Image = mongoose.model<IImage>("Image", imageSchema);

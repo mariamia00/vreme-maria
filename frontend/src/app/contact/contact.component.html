@@ -1,0 +1,143 @@
+<div class="container my-4">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="container">
+        <h3>Contact us (if needed)</h3>
+
+        <p>
+          Please complete the each field and add a
+          <span class="bg-warning">VALID email address</span> so we can contact
+          you back
+        </p>
+        <form [formGroup]="contactForm" (ngSubmit)="submitForm()">
+          <div class="form-group">
+            <label for="name">Name:</label>
+            <input
+              type="text"
+              class="form-control"
+              id="name"
+              formControlName="name"
+            />
+            <div
+              *ngIf="
+                contactForm.get('name')!.invalid &&
+                (contactForm.get('name')!.dirty ||
+                  contactForm.get('name')!.touched)
+              "
+              class="text-danger"
+            >
+              <div *ngIf="contactForm.get('name')!.hasError('required')">
+                Name is required
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="email">Email:</label>
+            <input
+              type="email"
+              class="form-control"
+              id="email"
+              formControlName="email"
+            />
+            <div
+              *ngIf="
+                contactForm.get('email')!.invalid &&
+                (contactForm.get('email')!.dirty ||
+                  contactForm.get('email')!.touched)
+              "
+              class="text-danger"
+            >
+              <div *ngIf="contactForm.get('email')!.hasError('required')">
+                Email is required
+              </div>
+              <div *ngIf="contactForm.get('email')!.hasError('email')">
+                Invalid email format
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="message">Message:</label>
+            <textarea
+              class="form-control"
+              id="message"
+              formControlName="message"
+            ></textarea>
+            <div
+              *ngIf="
+                contactForm.get('message')!.invalid &&
+                (contactForm.get('message')!.dirty ||
+                  contactForm.get('message')!.touched)
+              "
+              class="text-danger"
+            >
+              <div *ngIf="contactForm.get('message')!.hasError('required')">
+                Message is required
+              </div>
+            </div>
+          </div>
+
+          <button type="submit" class="btn btn-primary my-2">Send</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="shadow-lg rounded-3 bg-custom hover-effect-card">
+  <div class="mt-5 py-3 container">
+    <h3 class="text-dark my-3">Our Team On Instagram:</h3>
+    <ul
+      class="shadow-sm list-unstyled d-flex justify-content-around bg-light p-3 rounded-3 flex-wrap"
+    >
+      <li class="nav-item">
+        <a
+          href="https://www.instagram.com/biancaelenapasare/"
+          target="_blank"
+          class="nav-link"
+          >Pasăre Elena-Bianca</a
+        >
+      </li>
+      <li class="nav-item">
+        <a
+          href="https://www.instagram.com/diana._.iza/"
+          target="_blank"
+          class="nav-link"
+          >Lungu Diana</a
+        >
+      </li>
+      <li class="nav-item">
+        <a
+          href="https://www.instagram.com/__62arek27__/"
+          target="_blank"
+          class="nav-link"
+          >Ilinca Alex</a
+        >
+      </li>
+      <li class="nav-item">
+        <a
+          href="https://www.instagram.com/liviu772/"
+          target="_blank"
+          class="nav-link"
+          >Olteanu Liviu</a
+        >
+      </li>
+      <li class="nav-item">
+        <a
+          href="https://www.instagram.com/instavladu/"
+          target="_blank"
+          class="nav-link"
+          >Vladu Alex</a
+        >
+      </li>
+      <li class="nav-item">
+        <a
+          href="https://www.instagram.com/andreicaragea_5/"
+          target="_blank"
+          class="nav-link"
+          >Caragea Andrei</a
+        >
+      </li>
+    </ul>
+  </div>
+</div>

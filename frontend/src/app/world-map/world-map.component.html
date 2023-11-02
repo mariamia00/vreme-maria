@@ -1,0 +1,41 @@
+<div class="container my-4">
+  <div class="search-bar m-3">
+    <div class="row">
+      <div class="col-md-5">
+        <input
+          type="text"
+          class="form-control"
+          placeholder="Enter a city..."
+          [(ngModel)]="searchCity"
+          (keyup.enter)="searchForCity()"
+        />
+      </div>
+      <div class="col-md-3">
+        <button class="btn btn-secondary" (click)="searchForCity()">
+          Search
+        </button>
+      </div>
+    </div>
+  </div>
+  <div id="map-container">
+    <div id="map" style="height: 500px"></div>
+    <div class="legend rounded-2 shadow bg-dark text-white">
+      <div class="legend-item">
+        <div class="legend-color" style="background-color: lightskyblue"></div>
+        <div class="legend-label">Below 10°C</div>
+      </div>
+      <div class="legend-item">
+        <div class="legend-color" style="background-color: lime"></div>
+        <div class="legend-label">10°C - 20°C</div>
+      </div>
+      <div class="legend-item">
+        <div class="legend-color" style="background-color: orange"></div>
+        <div class="legend-label">20°C - 28°C</div>
+      </div>
+      <div class="legend-item">
+        <div class="legend-color" style="background-color: red"></div>
+        <div class="legend-label">Above 28°C</div>
+      </div>
+    </div>
+  </div>
+</div>

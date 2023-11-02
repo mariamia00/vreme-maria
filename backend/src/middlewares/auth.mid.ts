@@ -1,6 +1,11 @@
 import { verify } from "jsonwebtoken";
 
 export default (req: any, res: any, next: any) => {
+  if (req.path === "/contact") {
+    console.log("Skipping auth for /api/contact");
+    return next();
+  }
+
   const token = req.headers.access_token;
 
   if (!token) {

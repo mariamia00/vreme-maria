@@ -1,0 +1,73 @@
+<div class="container my-4 text-center">
+  <h2 class="text-center text-dark" routerLink="home">
+    <img src="../../assets/icon.ico" alt="main icon" width="80px" />
+    Meteorology Information Tracker
+  </h2>
+  <div class="bg-warning p-2 rounded-3 fs-6 d-inline m-0">
+    <i class="fas fa-exclamation-triangle mx-2"></i>This is a test project (see
+    About section)<i class="fas fa-exclamation-triangle mx-2"></i>
+  </div>
+</div>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container">
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-toggle="collapse"
+      data-target="#navbarNav"
+      aria-controls="navbarNav"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+      (click)="toggleNavbar()"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div
+      [ngClass]="{ collapse: !isNavbarOpen, 'navbar-collapse': true }"
+      id="navbarNav"
+    >
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" routerLink="home" routerLinkActive="active"
+            >Home</a
+          >
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="about" routerLinkActive="active"
+            >About</a
+          >
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="worldmap" routerLinkActive="active"
+            >World Map</a
+          >
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="uyw" routerLinkActive="active">UYW</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="contact" routerLinkActive="active"
+            >Contact</a
+          >
+        </li>
+        <li class="nav-item" *ngIf="!isAuth">
+          <a class="nav-link" routerLink="login" routerLinkActive="active"
+            >Login</a
+          >
+        </li>
+        <li class="nav-item" *ngIf="isAuth">
+          <a class="nav-link" routerLinkActive="active">Hi, {{ user.name }}</a>
+        </li>
+        <li class="nav-item" *ngIf="isAuth">
+          <a
+            class="nav-link"
+            routerLink="login"
+            routerLinkActive="active"
+            (click)="logout()"
+            >Logout</a
+          >
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>

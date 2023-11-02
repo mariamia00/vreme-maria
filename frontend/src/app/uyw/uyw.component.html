@@ -1,0 +1,157 @@
+<div class="container">
+  <div class="row my-5 d-flex justify-content-center">
+    <div class="col-md-8 p-3 bg-light rounded-3">
+      <button (click)="toggleCollapse()" class="btn btn-primary">
+        {{ isCollapsed ? "Close" : "Make a post" }}
+      </button>
+      <div class="row d-flex justify-content-center">
+        <div class="col-md-6" *ngIf="isCollapsed">
+          <!-- Adjust the col-md-3 width as needed -->
+          <h4 class="text-center">Create your post</h4>
+
+          <form (submit)="uploadImage()" enctype="multipart/form-data">
+            <div class="form-group bg-white my-3 p-3 rounded-3 text-center">
+              <i class="fa fa-cloud-upload"></i>
+              <label>Drag and drop your image here</label><br />
+              <span>OR</span>
+              <br />
+              <div class="bg-light rounded-3 p-2 m-2">
+                <label for="file">Select a file</label>
+                <input
+                  type="file"
+                  class="form-control-file"
+                  id="image"
+                  name="image"
+                  (change)="onImageSelected($event)"
+                  required
+                />
+                <p class="my-2">File size limit : 10 MB</p>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="title">Your post description</label>
+              <input
+                type="text"
+                class="form-control"
+                id="title"
+                name="title"
+                [(ngModel)]="imageTitle"
+                required
+              />
+            </div>
+            <div class="text-center mt-3">
+              <button type="submit" class="btn btn-primary">Upload</button>
+            </div>
+          </form>
+        </div>
+      </div>
+      <hr />
+
+      <!-- * display posts section -->
+      <div class="container p-4">
+        <h4 class="text-center mb-4 bg-dark p-3 text-white rounded-3">Feed</h4>
+
+        <div class="text-secondary text-center" *ngIf="images.length < 1">
+          <p>Ops, it seems there are no posts yet</p>
+        </div>
+        <div class="d-flex flex-column align-items-center">
+          <div class="col-md-10" *ngFor="let image of images">
+            <div class="card my-3">
+              <div
+                class="card-body d-flex justify-content-between text-secondary bg-light rounded-3 align-items-center"
+              >
+                <div>
+                  <i class="fas fa-user mx-2"></i>
+                  <small class="fw-bold"
+                    >Created by {{ image.authorName }}</small
+                  >
+                </div>
+
+                <button
+                  *ngIf="userId === image.author"
+                  (click)="deletePost(image._id)"
+                  class="btn btn-danger btn-sm"
+                >
+                  <i class="fa fa-trash"></i>
+                </button>
+              </div>
+
+              <div class="card-body d-flex justify-content-between">
+                <p class="card-title fw-light">{{ image.title }}</p>
+              </div>
+
+              <div class="image-wrapper">
+                <img
+                  [src]="postLocation + image.imageUrl"
+                  class="card-img-top image"
+                  alt="{{ image.title }}"
+                />
+              </div>
+              <div class="card-body">
+                <!-- Add comment section here -->
+                <div class="comment-section">
+                  <!-- Input field to add a new comment -->
+                  <div class="input-group mb-3">
+                    <input
+                      type="text"
+                      class="form-control"
+                      [(ngModel)]="newComment"
+                      placeholder="Add a comment..."
+                      aria-label="Add a comment"
+                      aria-describedby="button-addon"
+                    />
+                    <button
+                      class="btn btn-primary"
+                      (click)="createComment(image._id)"
+                      type="button"
+                      id="button-addon"
+                    >
+                      <i class="fas fa-paper-plane"></i> Add Comment
+                    </button>
+                  </div>
+
+                  <!-- Display existing comments -->
+                  <div
+                    *ngFor="let comment of image.comments"
+                    class="d-flex justify-content-between bg-light rounded-3 my-3 py-2 px-3"
+                  >
+                    <div>
+                      <p class="fs-6 m-0">
+                        <b>{{ comment.author.name }}</b
+                        ><span class="mx-2 text-secondary">•</span>
+
+                        <small class="fst-italic text-secondary">{{
+                          comment.createdAt | date : "dd.MM.yyyy HH:mm"
+                        }}</small>
+                      </p>
+                      <p class="m-0">{{ comment.text }}</p>
+                    </div>
+                    <div>
+                      <button
+                        *ngIf="userId === comment.author._id"
+                        (click)="deleteComment(comment._id)"
+                        class="btn btn-sm"
+                      >
+                        <i class="fa fa-minus-square mx-1"></i>Delete
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-3 p-3 bg-light rounded-3 mx-3">
+      <!-- Add content for connected users here -->
+      <h5 class="text-center text-secondary">Connected Users</h5>
+      <!-- You can display a list of connected users here -->
+      <p class="text-primary">
+        This feature may be coming soon. <br />
+        For now it's just and idea.
+      </p>
+    </div>
+  </div>
+</div>

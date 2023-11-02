@@ -9,6 +9,8 @@ import postRouter from "./routers/post.router";
 import path from "path"; // Import 'path' module
 import mongoose from "mongoose";
 import { UserSchema } from "./models/user.model";
+import contactRouter from "./routers/contact.router";
+import commentRouter from "./routers/comments.router";
 dbConnect();
 
 const app = express();
@@ -25,6 +27,8 @@ const UserModel = mongoose.model("User", UserSchema);
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 app.use("/api/users", userRouter);
 app.use("/api", postRouter);
+app.use("/api", contactRouter);
+app.use("/api/comments", commentRouter);
 
 const port = process.env.PORT || 5000;
 app.listen(port, () => {

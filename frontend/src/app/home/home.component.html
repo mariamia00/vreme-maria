@@ -1,0 +1,155 @@
+<div class="container my-3">
+  <div class="container my-4">
+    <h4 class="text-dark">Welcome to our weather community!</h4>
+    <p>
+      We're learning how to create websites and web applications and this is how
+      far we've got for now! If you really plan to use this website please read
+      the about section for information related to registering, privacy issues
+      and this website
+    </p>
+  </div>
+
+  <!-- * weather for one city, one day -->
+  <div class="bg-light p-4 my-4 rounded-3 shadow justify-content-left">
+    <p>Now checking weather for {{ WeatherData.name }}</p>
+    <hr />
+    <div class="row">
+      <div class="col-md-3 d-flex flex-column">
+        <div id="divWeatherMain" class="d-flex flex-column">
+          <div *ngIf="WeatherData.isDay" class="weatherWidgetRow">
+            <i class="fas fa-3x fa-sun sun"></i>
+          </div>
+          <div *ngIf="!WeatherData.isDay" class="weatherWidgetRow">
+            <i class="fas fa-3x fa-moon moon"></i>
+          </div>
+          <div class="weatherWidgetRow cloudDiv">
+            <i class="fas fa-cloud fa-3x cloud"></i>
+          </div>
+          <div
+            class="weatherWidgetRow"
+            style="font-size: 32px; margin-top: 5px"
+          >
+            {{ WeatherData.temp_celcius }}°
+          </div>
+
+          <div class="weatherWidgetRow" style="font-size: 14px">
+            Feels Like: {{ WeatherData.temp_feels_like }}°
+          </div>
+          <div
+            class="weatherWidgetRow"
+            style="font-size: 25px; margin-top: 10px"
+          >
+            {{ WeatherData.name }}
+          </div>
+          <div class="weatherWidgetRow" style="font-size: 14px">
+            <p>
+              Precipitation:
+              {{ calcPrecipitationTGJIU(WeatherData).precipitation }} mm (
+              {{ calcPrecipitationTGJIU(WeatherData).chanceOfPrecipitation }}%)
+            </p>
+          </div>
+          <div class="weatherWidgetRow" style="font-size: 14px">
+            Humidity: {{ WeatherData.main.humidity }}%
+          </div>
+        </div>
+      </div>
+      <div class="col-md-9">
+        <div id="divWeatherDetails" class="bg-primary rounded-3 p-3 h-100">
+          <h4>
+            More about weather in {{ WeatherData.name }} ({{
+              WeatherData.sys?.country
+            }})
+          </h4>
+          <p>
+            Temperature: {{ WeatherData.temp_celcius }}° (feels like
+            {{ WeatherData.temp_feels_like }}° and there's
+            {{ WeatherData.weather?.[0]?.description }}) Visibility:
+            {{ WeatherData.visibility }} meters
+          </p>
+          <div class="row mx-2 fw-light">
+            <div class="col-md-5 semitransparent-bg mx-1">
+              <p>
+                Sunrise:
+                {{ WeatherData.sys?.sunrise * 1000 | date : "hh:mm a" }}
+              </p>
+              <p>
+                Sunset: {{ WeatherData.sys?.sunset * 1000 | date : "hh:mm a" }}
+              </p>
+              <p>
+                Pressure: {{ WeatherData.main.pressure }} hPa ({{
+                  getPressureCategory(WeatherData.main.pressure)
+                }})
+              </p>
+            </div>
+            <div class="col md-5 semitransparent-bg mx-1">
+              <p class="fw-bolder">Wind</p>
+              <p>Speed: {{ convertWindSpeed(WeatherData.wind?.speed) }} km/h</p>
+              <p>
+                Direction:
+                {{ getWindDirection(WeatherData.wind?.deg) }}
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!--* ---------- 8 days forecast -------->
+  <div class="bg-light my-4 p-4 rounded-3 shadow">
+    <h2 class="mb-3">6-day forecast</h2>
+    <input [(ngModel)]="city" class="form-control" placeholder="Enter a city" />
+    <button (click)="getForecastData(city)" class="btn btn-secondary my-2">
+      Search
+    </button>
+    <hr />
+    <div *ngIf="forecastData">
+      <h3>Weather for {{ forecastData.city.name }}</h3>
+      <div class="row text-center">
+        <ng-container *ngFor="let forecast of groupForecastsByDay()">
+          <div class="col-md-4 col-sm-4">
+            <div class="card mb-3 weather-card">
+              <div class="card-body">
+                <h6 class="date text-light">
+                  {{ forecast.dt_txt | date : "mediumDate" }}
+                </h6>
+                <div class="mb-3">
+                  <div class="weatherWidgetRow">
+                    <i
+                      [ngClass]="getWeatherIcon(forecast)"
+                      class="fas fa-3x"
+                      [style.color]="getWeatherIconColor(forecast)"
+                    ></i>
+                  </div>
+
+                  <div
+                    class="weatherWidgetRow cloudDiv"
+                    *ngIf="getWeatherIcon(forecast) !== 'fa-sun'"
+                  >
+                    <i class="fas fa-cloud fa-3x cloud"></i>
+                  </div>
+                </div>
+
+                <div class="row text-center my-3">
+                  <p class="fs-3 p-0 m-0">
+                    {{ forecast.main.temp.toFixed(0) }}°C
+                  </p>
+                  <p class="feels-like p-0 m-0">
+                    Feels Like: {{ forecast.main.feels_like.toFixed(0) }}°C
+                  </p>
+                </div>
+                <p>
+                  Precipitation:
+                  {{ forecast.rain ? forecast.rain["3h"] + " mm" : "0" }}
+                  ({{ forecast.pop * 100 }}%)
+                </p>
+                <p>{{ forecast.weather[0].description }}</p>
+                <p>Humidity: {{ forecast.main.humidity }}%</p>
+              </div>
+            </div>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+</div>
