@@ -1,0 +1,47 @@
+<div class="container my-4">
+  <h2>People</h2>
+  <form (submit)="addPerson()" class="mb-3 bg-light p-4 rounded-3">
+    <div class="form-row">
+      <div class="form-group col-3">
+        <input
+          [(ngModel)]="newPerson.name"
+          class="form-control"
+          placeholder="Name"
+          name="name"
+        />
+      </div>
+      <div class="form-group col-3 my-4">
+        <input
+          [(ngModel)]="newPerson.age"
+          class="form-control"
+          placeholder="Age"
+          name="age"
+        />
+      </div>
+      <div class="form-group col-3">
+        <input
+          [(ngModel)]="newPerson.job"
+          class="form-control"
+          placeholder="Job"
+          name="job"
+        />
+      </div>
+      <div class="form-group col-2 my-2">
+        <button type="submit" class="btn btn-primary">Add Person</button>
+      </div>
+    </div>
+  </form>
+
+  <h2>Displaying the people here</h2>
+  <p *ngIf="people.length < 1" class="text-secondary">Nothing to display</p>
+  <ul class="list-unstyled">
+    <li *ngFor="let person of people" class="mb-3">
+      <div class="alert alert-info d-flex justify-content-between">
+        {{ person.name }} ({{ person.age }} years old) - {{ person.job }}
+        <button (click)="deletePerson(person._id)" class="btn btn-danger">
+          Delete
+        </button>
+      </div>
+    </li>
+  </ul>
+</div>
