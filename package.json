@@ -1,6 +1,9 @@
 {
   "name": "last-proj---copy",
   "version": "1.0.0",
+  "engines": {
+    "node": ">=18 <21"
+  },
   "description": "",
   "main": "built/server.js",
   "scripts": {
@@ -10,5 +13,8 @@
     "build": "cd frontend && npm install && npm run build"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "typescript": ">=4.9.3 <5.2"
+  }
 }
