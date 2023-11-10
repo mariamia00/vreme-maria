@@ -11,7 +11,7 @@ export class MainComponent {
   people: any[] = [];
   newPerson: any = { name: '', age: 0, job: '' };
   serverUrl = environment.production
-    ? 'https://crazyweather.onrender.com'
+    ? 'https://testwebsite-ousg.onrender.com'
     : 'http://localhost:5000';
 
   constructor(private http: HttpClient) {}
