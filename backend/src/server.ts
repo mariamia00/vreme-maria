@@ -16,7 +16,7 @@ app.use(
   cors({
     credentials: true,
     methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
-    origin: ["http://localhost:4200"],
+    origin: ["https://testwebsite-ousg.onrender.com"],
   })
 );
 
@@ -24,12 +24,12 @@ app.use(bodyParser.json());
 
 app.use("/api/people", personRouter);
 
-// app.use(express.static(path.join(__dirname, "../../frontend/dist/weather/")));
+app.use(express.static(path.join(__dirname, "../../frontend/dist/frontend/")));
 
 // Catch-all route to serve Angular's index.html
-// app.get("*", (req, res) => {
-//   res.sendFile(path.join(__dirname, "../../frontend/dist/weather/index.html"));
-// });
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "../../frontend/dist/frontend/index.html"));
+});
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
