@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-main',
@@ -9,7 +10,10 @@ import { HttpClient } from '@angular/common/http';
 export class MainComponent {
   people: any[] = [];
   newPerson: any = { name: '', age: 0, job: '' };
-  serverUrl = 'http://localhost:5000';
+  serverUrl = environment.production
+    ? 'https://crazyweather.onrender.com'
+    : 'http://localhost:5000';
+
   constructor(private http: HttpClient) {}
 
   ngOnInit() {
